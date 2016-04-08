@@ -1,59 +1,59 @@
 package javalab5;
 
+import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.converter.IntegerStringConverter;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
+import javax.persistence.*;
 
 /**
  *
  * @author Damian Darczuk
  */
-@XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "book", propOrder = {"title", "pages"})
+@Entity
+@Table(name = "books")
 public class Book {
     
+    @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    
+    @Column
     private StringProperty title = new SimpleStringProperty();
-    private IntegerProperty pages = new SimpleIntegerProperty();
-            
+    
+    @OneToMany(mappedBy = "book")
+    private List<Author> authors;
+                
     public Book() {
-        title = new SimpleStringProperty("");
-        pages = new SimpleIntegerProperty(0);
+        title = new SimpleStringProperty("");       
     }
     
-    public Book(String title, int pages) {
-        this.title.set(title);
-        this.pages.set(pages);
-    }
-    
-    public Book(String title, String pages) {
+    public Book(String title) {
         this.title.set(title);        
-        IntegerStringConverter conv = new IntegerStringConverter();
-        int page = conv.fromString(pages);
-        this.pages.set(page);
     }
-    
-    @XmlAttribute
+        
     public String getTitle(){
         return this.title.getValue();
     }
-    
-    @XmlAttribute
-    public int getPages() {
-        return this.pages.get();
-    }
-    
+        
     public void setTitle(String title) {
         this.title.set(title);
     }
+
+    public Integer getId(){
+        return this.id;
+    }
+        
+    public void setId(Integer title) {
+        this.id = title;
+    }
     
-    public void setPages(int pages) {
-        this.pages.set(pages);
+    public void setId(String title) {
+        IntegerStringConverter conv = new IntegerStringConverter();
+        int ti = conv.fromString(title);
+        this.id = ti;
     }
     
 }

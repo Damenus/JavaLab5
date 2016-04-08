@@ -7,3 +7,5 @@ Na szczęście w netbeans jest już server baz danych, wystarczy uruchomić i sk
 Jak będziecie chcieli uruchomić magówJPA to musicie mieć baze danych zgodną z tym co jest w pliku persistence.xml (hasło użytkownik i serwer) i chyba stworzyć tabele tak jak ma gdzieś w pliku sql.
 Potrzeny jest netbeans z javaEE, tak mi się wydaje bo JavaEE ma opcje serverowe a SE nie ma. Reinstalowałem netbeans do JavaEE,
 ale w sumie pomogło dopiero to: http://stackoverflow.com/questions/29196489/netbeans-not-starting-java-db-server-with-jdk-1-8-0-40
+
+EDIT: W projekcie do libraries trzeba dodać Java DB Driver

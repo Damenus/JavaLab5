@@ -19,6 +19,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -43,16 +46,23 @@ public class FXMLDocumentController implements Initializable {
     TableView<Book> authorTableView;
     
     ObservableList<Book> books = FXCollections.observableArrayList();
-    ObservableList<Author> author = FXCollections.observableArrayList();
+    ObservableList<Author> authors = FXCollections.observableArrayList();
+    
+    private EntityManager em;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaLab5PU");
+        em = emf.createEntityManager();
+        
+        
         titleBookColumn.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
         idBookColumn.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
         
-//        bookTableView.setItems(books);
-//        bookTableView.setEditable(true);
-                     
+//      bookTableView.setItems(books);
+//      bookTableView.setEditable(true);
+//      setCellFactoryD(titleBookColumn);  
+          
         titleBookColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         titleBookColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
             @Override
@@ -69,11 +79,23 @@ public class FXMLDocumentController implements Initializable {
             @Override
             public void handle(TableColumn.CellEditEvent<Book, Integer> event) {
                 Book book = event.getRowValue();
-                int newPages = event.getNewValue();
-                book.setPages(newPages);
+                int newId = event.getNewValue();
+                book.setId(newId);
             }
         });
         
     }    
+    
+    void setCellFactoryD(TableColumn a){
+        a.setCellFactory(TextFieldTableCell.forTableColumn());
+        a.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Book, String> event) {
+                Book book = event.getRowValue();
+                String newTitle = event.getNewValue();
+                book.setTitle(newTitle);
+            }            
+        });  
+    }
     
 }
