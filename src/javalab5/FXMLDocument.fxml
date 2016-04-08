@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="BorderPane" bottom="$null" prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javalab5.FXMLDocumentController">
+       <center>
+        <VBox prefHeight="400.0" prefWidth="500.0">
+            <TableView fx:id="booksTableView" prefHeight="200.0" prefWidth="500.0">
+                <columns>
+                    <TableColumn prefWidth="198.0" text="id" fx:id="idBookColumn">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="idBookColumn" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="198.0" text="title" fx:id="titleBookColumn" >
+                        <cellValueFactory>
+                            <PropertyValueFactory property="titleBookColumn" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+            <TableView fx:id="authorTableView" prefHeight="200.0" prefWidth="200.0">
+                <columns>
+                    <TableColumn prefWidth="150.0" text="id" fx:id="idAuthorColumn">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="idAuthorColumn" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="150.0" text="name" fx:id="nameAuthorColumn">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="nameAuthorColumn" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="150.0" text="surname" fx:id="surnameAuthorColumn">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="surnameAuthorColumn" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    <right>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+            <children>
+                <Button mnemonicParsing="false" prefWidth="100.0" text="New"  />
+                <Button mnemonicParsing="false" prefWidth="100.0" text="Delete"  />
+            </children>
+        </VBox>
+    </right>  
+</BorderPane>
