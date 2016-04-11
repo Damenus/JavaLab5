@@ -8,37 +8,37 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane id="BorderPane" bottom="$null" prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javalab5.FXMLDocumentController">
-       <center>
+      <center>
         <VBox prefHeight="400.0" prefWidth="500.0">
-            <TableView fx:id="booksTableView" prefHeight="200.0" prefWidth="500.0">
-                <columns>
-                    <TableColumn prefWidth="198.0" text="id" fx:id="idBookColumn">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="idBookColumn" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn prefWidth="198.0" text="title" fx:id="titleBookColumn" >
-                        <cellValueFactory>
-                            <PropertyValueFactory property="titleBookColumn" />
-                        </cellValueFactory>
-                    </TableColumn>
-                </columns>
-            </TableView>
             <TableView fx:id="authorTableView" prefHeight="200.0" prefWidth="200.0">
                 <columns>
                     <TableColumn prefWidth="150.0" text="id" fx:id="idAuthorColumn">
                         <cellValueFactory>
-                            <PropertyValueFactory property="idAuthorColumn" />
+                            <PropertyValueFactory property="id" />
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn prefWidth="150.0" text="name" fx:id="nameAuthorColumn">
                         <cellValueFactory>
-                            <PropertyValueFactory property="nameAuthorColumn" />
+                            <PropertyValueFactory property="name" />
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn prefWidth="150.0" text="surname" fx:id="surnameAuthorColumn">
                         <cellValueFactory>
-                            <PropertyValueFactory property="surnameAuthorColumn" />
+                            <PropertyValueFactory property="surname" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+            <TableView fx:id="bookTableView" prefHeight="200.0" prefWidth="500.0">
+                <columns>
+                    <TableColumn prefWidth="198.0" text="id" fx:id="idBookColumn">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="id" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="198.0" text="title" fx:id="titleBookColumn" >
+                        <cellValueFactory>
+                            <PropertyValueFactory property="title" />
                         </cellValueFactory>
                     </TableColumn>
                 </columns>

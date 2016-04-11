@@ -5,6 +5,7 @@
  */
 package javalab5;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -12,24 +13,19 @@ import javax.persistence.*;
  * @author Damian Darczuk
  */
 @Entity
-@Table(name = "authors")
-public class Author {
+@Table(name = "AUTHOR")
+@NamedQuery(name = "Author.findAll", query = "SELECT f FROM Author f")
+public class Author implements Serializable {
     
     @Id
     private Integer id;
-    @Column
+    @Column(name = "NAME")
     private String name;
-    @Column
-    private String surname;
-    @ManyToOne
-    @JoinColumn(name = "author", referencedColumnName = "id")
-    private Book book;
-    
-    
-    Author(){
-        
-    }   
-    
+    @Column(name = "SURNAME")
+    private String surname;    
+
+    public Author() {
+    }  
     
     public Integer getId() {
         return this.id;
@@ -54,13 +50,5 @@ public class Author {
      public void setSurname(String surname){
         this.surname = surname;
     }
-        
-     public Book getBook() {
-        return this.book;
-    }
-     
-    public void setBook(Book book){
-        this.book = book;
-    }
-    
+           
 }

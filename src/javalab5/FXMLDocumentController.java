@@ -6,6 +6,7 @@
 package javalab5;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,40 +30,76 @@ import javax.persistence.Persistence;
  */
 public class FXMLDocumentController implements Initializable {
         
-    @FXML
-    TableColumn idBookColumn;
-    @FXML
-    TableColumn titleBookColumn;
-    @FXML
-    TableView<Book> bookTableView;
-    
-    @FXML
+   @FXML
     TableColumn idAuthorColumn;
     @FXML
     TableColumn nameAuthorColumn;
     @FXML
     TableColumn surnameAuthorColumn;
     @FXML
-    TableView<Book> authorTableView;
+    TableView<Author> authorTableView;
+    
+    @FXML
+    TableColumn idBookColumn;
+    @FXML
+    TableColumn titleBookColumn;
+    @FXML
+    TableView<Book> bookTableView;    
     
     ObservableList<Book> books = FXCollections.observableArrayList();
     ObservableList<Author> authors = FXCollections.observableArrayList();
     
     private EntityManager em;
-
+       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaLab5PU");
-        em = emf.createEntityManager();
+        em = emf.createEntityManager();  
+                
+        authorTableView.setItems(authors);
+        bookTableView.setItems(books);
+         
+        List<Author> dbAuthors = em.createNamedQuery("Author.findAll").getResultList();
+        authors.addAll(dbAuthors);
         
+        List<Book> dbBook = em.createNamedQuery("Book.findAll").getResultList();
+        books.addAll(dbBook);
         
-        titleBookColumn.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-        idBookColumn.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
+        authorTableView.setEditable(true);
+        bookTableView.setEditable(true);
         
-//      bookTableView.setItems(books);
-//      bookTableView.setEditable(true);
-//      setCellFactoryD(titleBookColumn);  
-          
+        IntegerStringConverter conv = new IntegerStringConverter();
+        
+        surnameAuthorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        surnameAuthorColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Author, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Author, String> event) {
+                Author author = event.getRowValue();
+                String newSName = event.getNewValue();
+                author.setSurname(newSName);
+            }
+        });
+        
+        nameAuthorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameAuthorColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Author, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Author, String> event) {
+                Author author = event.getRowValue();
+                String newName = event.getNewValue();
+                author.setName(newName);
+            }
+        });
+        
+        idAuthorColumn.setCellFactory(TextFieldTableCell.forTableColumn(conv));
+        idAuthorColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Author, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Author, Integer> event) {
+                Author author = event.getRowValue();
+                int newId = event.getNewValue();
+                author.setId(newId);
+            }
+        });
+        
         titleBookColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         titleBookColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
             @Override
@@ -72,8 +109,7 @@ public class FXMLDocumentController implements Initializable {
                 book.setTitle(newTitle);
             }            
         });        
-        
-        IntegerStringConverter conv = new IntegerStringConverter();
+               
         idBookColumn.setCellFactory(TextFieldTableCell.forTableColumn(conv));
         idBookColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, Integer>>() {
             @Override
@@ -83,19 +119,7 @@ public class FXMLDocumentController implements Initializable {
                 book.setId(newId);
             }
         });
-        
     }    
     
-    void setCellFactoryD(TableColumn a){
-        a.setCellFactory(TextFieldTableCell.forTableColumn());
-        a.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<Book, String> event) {
-                Book book = event.getRowValue();
-                String newTitle = event.getNewValue();
-                book.setTitle(newTitle);
-            }            
-        });  
-    }
     
 }

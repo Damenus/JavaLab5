@@ -1,8 +1,7 @@
 package javalab5;
 
+import java.io.Serializable;
 import java.util.List;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.converter.IntegerStringConverter;
@@ -13,33 +12,30 @@ import javax.persistence.*;
  * @author Damian Darczuk
  */
 @Entity
-@Table(name = "books")
+@Table(name = "BOOK")
+@NamedQuery(name = "Book.findAll", query = "SELECT f FROM Book f")
 public class Book {
     
     @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+   // @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;    
+    @Column(name = "TITLE")
+    private String title;
     
-    @Column
-    private StringProperty title = new SimpleStringProperty();
-    
-    @OneToMany(mappedBy = "book")
-    private List<Author> authors;
-                
     public Book() {
-        title = new SimpleStringProperty("");       
+              
     }
     
     public Book(String title) {
-        this.title.set(title);        
+        this.title = title;        
     }
         
     public String getTitle(){
-        return this.title.getValue();
+        return this.title;
     }
         
     public void setTitle(String title) {
-        this.title.set(title);
+        this.title = title;
     }
 
     public Integer getId(){
@@ -55,5 +51,4 @@ public class Book {
         int ti = conv.fromString(title);
         this.id = ti;
     }
-    
 }

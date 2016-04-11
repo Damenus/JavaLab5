@@ -9,3 +9,4 @@ Potrzeny jest netbeans z javaEE, tak mi się wydaje bo JavaEE ma opcje serverowe
 ale w sumie pomogło dopiero to: http://stackoverflow.com/questions/29196489/netbeans-not-starting-java-db-server-with-jdk-1-8-0-40
 
 EDIT: W projekcie do libraries trzeba dodać Java DB Driver
+EDIT2: Problem z platformlogger: http://stackoverflow.com/questions/22562797/javafx8-sun-util-logging-platformlogger-not-found-exception-in-netbeans-8
