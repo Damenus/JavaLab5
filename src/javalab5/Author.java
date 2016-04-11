@@ -30,7 +30,7 @@ public class Author implements Serializable {
     private String surname; 
     
     private ObservableList<Book> books = FXCollections.observableArrayList();
-    // private List<Book> books;
+    
     public Author() {
     } 
     
