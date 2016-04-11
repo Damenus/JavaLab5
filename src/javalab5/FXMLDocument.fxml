@@ -54,16 +54,16 @@
                         <TextField fx:id="nameField" prefWidth="100.0"  />  
                         <Label text="New Surname" /> 
                         <TextField fx:id="surnameField" prefWidth="100.0" />
-                        <Button mnemonicParsing="false" prefWidth="100.0" text="New Author"  />
-                        <Button mnemonicParsing="false" prefWidth="100.0" text="Delete Author"  />  
+                        <Button mnemonicParsing="false" prefWidth="100.0" text="New Author" onAction="#newAuthorAction" />
+                        <Button mnemonicParsing="false" prefWidth="100.0" text="Delete Author" onAction="#deleteAuthorAction"  />  
                     </children>
                 </VBox>    
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label text="New Title" />           
                         <TextField fx:id="titleField" prefWidth="100.0"  />  
-                        <Button mnemonicParsing="false" prefWidth="100.0" text="New Book"  />
-                        <Button mnemonicParsing="false" prefWidth="100.0" text="Delete Book"  />
+                        <Button mnemonicParsing="false" prefWidth="100.0" text="New Book" onAction="#newBookAction"  />
+                        <Button mnemonicParsing="false" prefWidth="100.0" text="Delete Book" onAction="#deleteBookAction" />
                     </children>
                 </VBox>
             </children>

@@ -20,6 +20,7 @@ import javax.persistence.*;
 public class Author implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(name = "NAME")
     private String name;

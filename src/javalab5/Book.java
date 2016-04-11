@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Book {
     
     @Id
-   // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;    
     @Column(name = "TITLE")
     private String title;
