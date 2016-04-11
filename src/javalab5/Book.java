@@ -1,9 +1,5 @@
 package javalab5;
 
-import java.io.Serializable;
-import java.util.List;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.util.converter.IntegerStringConverter;
 import javax.persistence.*;
 
@@ -21,14 +17,24 @@ public class Book {
     private Integer id;    
     @Column(name = "TITLE")
     private String title;
+    //@ManyToOne
+   // @JoinColumn(name = "AUTHOR", referencedColumnName = "ID")    
+   // private Author author;
     
-    public Book() {
-              
+    public Book() {              
     }
     
     public Book(String title) {
         this.title = title;        
     }
+    
+   // public Author getAuthor(){
+   //     return this.author;
+  //  }
+        
+   // public void setAuthor(Author author) {
+   //     this.author = author;
+  //  }
         
     public String getTitle(){
         return this.title;

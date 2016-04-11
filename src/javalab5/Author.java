@@ -6,6 +6,8 @@
 package javalab5;
 
 import java.io.Serializable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javax.persistence.*;
 
 /**
@@ -22,7 +24,9 @@ public class Author implements Serializable {
     @Column(name = "NAME")
     private String name;
     @Column(name = "SURNAME")
-    private String surname;    
+    private String surname;   
+   // @OneToMany(mappedBy = "id")
+  //  private ObservableList<Book> books = FXCollections.observableArrayList();
 
     public Author() {
     }  

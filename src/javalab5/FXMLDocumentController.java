@@ -77,6 +77,7 @@ public class FXMLDocumentController implements Initializable {
                 Author author = event.getRowValue();
                 String newSName = event.getNewValue();
                 author.setSurname(newSName);
+                update(event.getRowValue());
             }
         });
         
@@ -87,6 +88,7 @@ public class FXMLDocumentController implements Initializable {
                 Author author = event.getRowValue();
                 String newName = event.getNewValue();
                 author.setName(newName);
+                update(event.getRowValue());
             }
         });
         
@@ -107,6 +109,7 @@ public class FXMLDocumentController implements Initializable {
                 Book book = event.getRowValue();
                 String newTitle = event.getNewValue();
                 book.setTitle(newTitle);
+                update(event.getRowValue());
             }            
         });        
                
@@ -119,7 +122,84 @@ public class FXMLDocumentController implements Initializable {
                 book.setId(newId);
             }
         });
-    }    
+    }  
     
+    @FXML
+    private void newBookAction(ActionEvent ae) {
+        Book book = new Book();
+        book.setTitle("");
+    }
+    
+    private void update(Author author){
+        try {
+            em.getTransaction().begin();
+            em.merge(author);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+   }
+    
+    private void update(Book book){
+         try {
+            em.getTransaction().begin();
+            em.merge(book);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+    
+    private void persist(Author author) {
+        try {
+            em.getTransaction().begin();
+            em.persist(author);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+    
+    private void persist(Book book) {
+        try {
+            em.getTransaction().begin();
+            em.persist(book);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+    
+    private void remove(Author author){
+        try {
+            em.getTransaction().begin();
+            em.remove(author);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+    
+    private void remove(Book book){
+        try {
+            em.getTransaction().begin();
+            em.remove(book);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
     
 }
