@@ -17,9 +17,10 @@ public class Book {
     private Integer id;    
     @Column(name = "TITLE")
     private String title;
-    //@ManyToOne
-   // @JoinColumn(name = "AUTHOR", referencedColumnName = "ID")    
-   // private Author author;
+    
+    @ManyToOne//(cascade = CascadeType.ALL)
+    @JoinColumn(name = "AUTHOR", referencedColumnName = "id")    
+    private Author author;
     
     public Book() {              
     }
@@ -28,13 +29,13 @@ public class Book {
         this.title = title;        
     }
     
-   // public Author getAuthor(){
-   //     return this.author;
-  //  }
+    public Author getAuthor(){
+        return this.author;
+    }
         
-   // public void setAuthor(Author author) {
-   //     this.author = author;
-  //  }
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
         
     public String getTitle(){
         return this.title;

@@ -8,18 +8,19 @@ package javalab5;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import javax.persistence.EntityManager;
@@ -55,7 +56,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     TableView<Book> bookTableView;    
     
-    ObservableList<Book> books = FXCollections.observableArrayList();
+    ListProperty<Book> books = new SimpleListProperty<>();
+    
     ObservableList<Author> authors = FXCollections.observableArrayList();
     
     private EntityManager em;
@@ -66,17 +68,23 @@ public class FXMLDocumentController implements Initializable {
         em = emf.createEntityManager();  
                 
         authorTableView.setItems(authors);
-        bookTableView.setItems(books);
-         
+        bookTableView.itemsProperty().bind(books);
+        
+             
         List<Author> dbAuthors = em.createNamedQuery("Author.findAll").getResultList();
         authors.addAll(dbAuthors);
+               
+        authorTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Author>() {
+            @Override
+            public void changed(ObservableValue<? extends Author> observable, Author oldValue, Author newValue) {
+                if (newValue != null) {
+                   books.set((ObservableList<Book>) newValue.getBooks());
+                } else {
+                   books.setValue(null);
+                }
+            }            
+        });
         
-        List<Book> dbBook = em.createNamedQuery("Book.findAll").getResultList();
-        books.addAll(dbBook);
-        
-    //    authorTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Author> {
-        
-  //  });
         
         
         authorTableView.setEditable(true);
@@ -162,6 +170,7 @@ public class FXMLDocumentController implements Initializable {
     private void newBookAction(ActionEvent ae) {
         Book book = new Book();
         book.setTitle(titleField.textProperty().getValue());
+        book.setAuthor(authorTableView.getSelectionModel().getSelectedItem());
         persist(book);
         books.add(book);
         titleField.clear();
@@ -229,7 +238,7 @@ public class FXMLDocumentController implements Initializable {
     private void remove(Author author){
         try {
             em.getTransaction().begin();
-            em.remove(author);
+            em.remove(em.merge(author));
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
@@ -241,7 +250,7 @@ public class FXMLDocumentController implements Initializable {
     private void remove(Book book){
         try {
             em.getTransaction().begin();
-            em.remove(book);
+            em.remove(em.merge(book));
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
