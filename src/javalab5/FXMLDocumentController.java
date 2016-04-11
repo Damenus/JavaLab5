@@ -8,6 +8,7 @@ package javalab5;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
@@ -29,8 +31,15 @@ import javax.persistence.Persistence;
  * @author Damian Darczuk
  */
 public class FXMLDocumentController implements Initializable {
-        
-   @FXML
+     
+    @FXML
+    TextField titleField;
+    @FXML
+    TextField surnameField;
+    @FXML
+    TextField nameField;
+    
+    @FXML
     TableColumn idAuthorColumn;
     @FXML
     TableColumn nameAuthorColumn;
@@ -64,6 +73,11 @@ public class FXMLDocumentController implements Initializable {
         
         List<Book> dbBook = em.createNamedQuery("Book.findAll").getResultList();
         books.addAll(dbBook);
+        
+    //    authorTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Author> {
+        
+  //  });
+        
         
         authorTableView.setEditable(true);
         bookTableView.setEditable(true);
@@ -125,9 +139,43 @@ public class FXMLDocumentController implements Initializable {
     }  
     
     @FXML
+    private void deleteBookAction(ActionEvent ae) {
+        Book book =  bookTableView.getSelectionModel().getSelectedItem();
+        if(book != null) {
+            books.remove(book);
+            remove(book);
+            bookTableView.getSelectionModel().clearSelection();
+        }
+    }
+    
+    @FXML
+    private void deleteAuthorAction(ActionEvent ae) {
+        Author author =  authorTableView.getSelectionModel().getSelectedItem();
+        if(author != null) {
+            authors.remove(author);
+            remove(author);
+            authorTableView.getSelectionModel().clearSelection();
+        }
+    }
+    
+    @FXML
     private void newBookAction(ActionEvent ae) {
         Book book = new Book();
-        book.setTitle("");
+        book.setTitle(titleField.textProperty().getValue());
+        persist(book);
+        books.add(book);
+        titleField.clear();
+    }
+    
+    @FXML
+    private void newAuthorAction(ActionEvent ae) {
+        Author author = new Author();
+        author.setName(nameField.textProperty().getValue());
+        author.setSurname(surnameField.textProperty().getValue());
+        persist(author);
+        authors.add(author);
+        surnameField.clear();
+        nameField.clear();
     }
     
     private void update(Author author){
